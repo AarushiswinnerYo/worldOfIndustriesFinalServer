@@ -3,8 +3,7 @@ from pydantic import BaseModel
 from tokenGenerator import gen
 from functions import *
 
-app = FastAPI()
-
+app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
 
 class Item(BaseModel):
     name: str
