@@ -10,7 +10,6 @@ class Item(BaseModel):
     price: float
     is_offer: bool | None = None
 
-
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
@@ -38,7 +37,3 @@ def get_login_token(token: str):
 def get_User_Info(username: str):
     info=showInv(username)
     return {"info":info}
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: str | None = None):
-    return {"item_id": item_id, "q": q}
