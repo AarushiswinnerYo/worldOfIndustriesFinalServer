@@ -4,7 +4,7 @@ import pickle
 from pymongo import MongoClient
 import tokenGenerator as tg
 
-cluster="mongodb+srv://W:a@woiserver.38gfy.mongodb.net/"
+cluster=os.getenv("MDB_CLUST")
 client=MongoClient(cluster)
 db=client.Users
 profs=db.names
