@@ -10,6 +10,7 @@ db=client.Users
 profs=db.names
 tl=db.loginTokens
 lists=db.listings
+price=db.prices
 resources=["wood", "steel", "plants", "metal", "plastic"]
 materials={"steel":["type1","type2","type3"], "plants":["cotton","wool","silk","bamboo","tomato","onion"],"metal":["iron", "tungsten","copper"], "wood":["wood"],"plastic":["plastic"]}
 def signUp(user, passwd):
@@ -34,6 +35,10 @@ def listListings(typeOfMaterial,material):
     finalList=allLists[material][typeOfMaterial]
     print(finalList)
     return finalList
+
+def getPrices():
+    prices=price.find_one({"prices":{'$exists': True}}, {"_id":0})
+    return prices
 
 def showInv(user):
     if profs.find_one({user: {'$exists': True}})!=None:

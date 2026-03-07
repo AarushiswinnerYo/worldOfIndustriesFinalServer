@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from tokenGenerator import gen
 from functions import *
 
-app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
+app = FastAPI()
 
 class Item(BaseModel):
     name: str
@@ -32,6 +32,11 @@ def login_user(username: str, passwd: str):
 def get_login_token(token: str):
     lt=tokenLogin(token)
     return {"user":lt}
+
+@app.post("/prices")
+def get_prices():
+    prices=getPrices()
+    return prices["prices"]
 
 @app.post('/userInfo')
 def get_User_Info(username: str):
