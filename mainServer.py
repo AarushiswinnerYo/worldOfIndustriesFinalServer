@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from tokenGenerator import gen
 from functions import *
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
