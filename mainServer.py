@@ -14,6 +14,8 @@ class Item(BaseModel):
 def read_root():
     return {"Hello": "World"}
 
+app.mount("/.well-known", StaticFiles(directory=".well-known"), name="well-known")
+
 @app.post("/signup")
 def signup_user(username: str, passwd: str, pin: int):
     signRes=signUp(username, passwd)
