@@ -36,11 +36,17 @@ def listListings(typeOfMaterial,material):
     print(finalList)
     return finalList
 
-def getPrices():
-    prices=price.find_one({"prices":{'$exists': True}}, {"_id":0})
+def getBuyPrices():
+    prices=price.find_one({"buyprices":{'$exists': True}}, {"_id":0})
     return prices
 
-def showInv(user):
+def getSellPrices():
+    pricesSell=price.find_one({"sellprices":{"$exists": True}}, {"_id":0})
+    return pricesSell
+
+def showInv(token):
+    f=tl.find_one({"token":token})
+    user=f["_id"]
     if profs.find_one({user: {'$exists': True}})!=None:
         l=profs.find_one({"_id":user},{"_id":0, user:0})
         return l
@@ -63,6 +69,7 @@ def loginToken(user):
     else:
         tl.insert_one({"_id":user, "token":token})
     return token
+
 
 def tokenLogin(token):
     f=tl.find_one({"token":token})

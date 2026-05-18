@@ -36,12 +36,17 @@ def get_login_token(token: str):
     lt=tokenLogin(token)
     return {"user":lt}
 
-@app.post("/prices")
-def get_prices():
-    prices=getPrices()
-    return prices["prices"]
+@app.post("/buyPrices")
+def get_buy_prices():
+    prices=getBuyPrices()
+    return prices["buyprices"]
+
+@app.post("/sellPrices")
+def get_sell_prices():
+    pricesSell=getSellPrices()
+    return pricesSell["sellprices"]
 
 @app.post('/userInfo')
-def get_User_Info(username: str):
-    info=showInv(username)
+def get_User_Info(token: str):
+    info=showInv(token)
     return {"info":info}
