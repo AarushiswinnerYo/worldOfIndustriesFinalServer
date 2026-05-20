@@ -18,7 +18,7 @@ def read_root():
 app.mount("/.well-known", StaticFiles(directory=".well-known"), name="well-known")
 
 @app.post("/signup")
-def signup_user(username: str, passwd: str, pin: int):
+def signup_user(username: str, passwd: str):
     signRes=signUp(username, passwd)
     return {"result": signRes}
 
@@ -40,6 +40,10 @@ def get_login_token(token: str):
 def get_buy_prices():
     prices=getBuyPrices()
     return prices["buyprices"]
+
+@app.post("/buy")
+def buy_materials(token: str, amount: int, passwd: str, ):
+    return
 
 @app.post("/sellPrices")
 def get_sell_prices():
