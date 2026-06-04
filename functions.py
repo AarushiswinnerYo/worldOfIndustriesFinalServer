@@ -38,7 +38,7 @@ def listListings(typeOfMaterial,material):
 
 def buyFunc(token, amount, passwd, materialName, materialSubType=""):
     userNameData=tl.find_one({"token": token})
-    username=userData['_id']
+    username=userNameData['_id']
     material_price=price.find_one({"buyprices":{"$exists":True}}, {'_id':0})["buyprices"][materialName]
     if materialSubType=="":
         query={"_id":username}
