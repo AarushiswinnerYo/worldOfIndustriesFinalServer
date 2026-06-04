@@ -59,7 +59,7 @@ def buyFunc(token, amount, passwd, materialName, materialSubType=""):
         total=material_price[materialSubType]*amount
         if userData[username]==passwd:
             if userData["money"]>=total:
-                update_operation={"$set":{"money": userData["money"]-total, materialName[materialSubType]:userData[materialName][materialSubType]+amount}}
+                update_operation={"$set":{"money": userData["money"]-total, materialName{materialSubType]:userData[materialName][materialSubType]+amount}}}
                 profs.update_one(query, update_operation)
                 return {"result":"Success"}
             else:
