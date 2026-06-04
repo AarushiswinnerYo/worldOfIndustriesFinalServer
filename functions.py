@@ -36,6 +36,24 @@ def listListings(typeOfMaterial,material):
     print(finalList)
     return finalList
 
+def buyFunc(token, amount, passwd, materialName, materialSubType=""):
+    userNameData=tl.find_one({"token": token})
+    username=userData['_id']
+    material_price=price.find_one({"buyprices":{"$exists":True}}, {'_id':0})["buyprices"][materialName]
+    if materialSubType=="":
+        query={"_id":username}
+        userData=profs.find_one(query)
+        total=material_price*amount
+        if userData[username]==passwd:
+            if userData["money"]>=total:
+                update_operation={"$set":{"money": userData["money"]-total, materialName:userData[materialName]+amount}}
+                profs.update_one(query, update_operation)
+                return {"result":"Success"}
+            else:
+                return {"result":"Not Sufficient Funds"}
+        else:
+            return {"result":"Incorrect Password"}
+
 def getBuyPrices():
     prices=price.find_one({"buyprices":{'$exists': True}}, {"_id":0})
     return prices
