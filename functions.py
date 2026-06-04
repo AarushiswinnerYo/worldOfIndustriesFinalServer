@@ -53,6 +53,19 @@ def buyFunc(token, amount, passwd, materialName, materialSubType=""):
                 return {"result":"Not Sufficient Funds"}
         else:
             return {"result":"Incorrect Password"}
+    else:
+        query={"_id":username}
+        userData=profs.find_one(query)
+        total=material_price[materialSubType]*amount
+        if userData[username]==passwd:
+            if userData["money"]>=total:
+                update_operation={"$set":{"money": userData["money"]-total, materialName[materialSubType]:userData[materialName][materialSubType]+amount}}
+                profs.update_one(query, update_operation)
+                return {"result":"Success"}
+            else:
+                return {"result":"Not Sufficient Funds"}
+        else:
+            return {"result":"Incorrect Password"}
 
 def getBuyPrices():
     prices=price.find_one({"buyprices":{'$exists': True}}, {"_id":0})
