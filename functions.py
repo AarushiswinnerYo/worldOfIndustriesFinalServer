@@ -68,6 +68,38 @@ def buyFunc(token, amount, passwd, materialName, materialSubType=""):
         else:
             return {"result":"Incorrect Password"}
 
+def sellFunc(token, amount, passwd, materialName, materialSubType=""):
+    userNameData=tl.find_one({"token": token})
+    username=userNameData['_id']
+    material_price=price.find_one({"sellprices":{"$exists":True}}, {'_id':0})["sellprices"][materialName]
+    if materialSubType=="":
+        query={"_id":username}
+        userData=profs.find_one(query)
+        total=material_price*amount
+        if userData[username]==passwd:
+            if userData[materialName]>=amount:
+                update_operation={"$set":{"money": userData["money"]+total, materialName:userData[materialName]-amount}}
+                profs.update_one(query, update_operation)
+                return {"result":"Success"}
+            else:
+                return {"result":"Not Sufficient Quantity"}
+        else:
+            return {"result":"Incorrect Password"}
+    else:
+        query={"_id":username}
+        userData=profs.find_one(query)
+        total=material_price[materialSubType]*amount
+        if userData[username]==passwd:
+            if userData[materialName][materialSubType]>=amount:
+                userData[materialName][materialSubType]-=amount
+                update_operation={"$set":{"money": userData["money"]+total, materialName:userData[materialName]}}
+                profs.update_one(query, update_operation)
+                return {"result":"Success"}
+            else:
+                return {"result":"Not Sufficient Quantity"}
+        else:
+            return {"result":"Incorrect Password"}
+
 def getBuyPrices():
     prices=price.find_one({"buyprices":{'$exists': True}}, {"_id":0})
     return prices

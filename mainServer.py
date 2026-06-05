@@ -45,6 +45,10 @@ def get_buy_prices():
 def buy_materials(token: str, amount: int, passwd: str, material_name:str, material_subtype=""):
     return buyFunc(token=token, amount=amount, passwd=passwd, materialName=material_name,materialSubType=material_subtype)
 
+@app.post("/sell")
+def sell_materials(token: str, amount: int, passwd: str, material_name:str, material_subtype=""):
+    return sellFunc(token=token, amount=amount, passwd=passwd, materialName=material_name,materialSubType=material_subtype)
+
 @app.post("/sellPrices")
 def get_sell_prices():
     pricesSell=getSellPrices()
