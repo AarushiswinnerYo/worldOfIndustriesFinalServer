@@ -109,7 +109,7 @@ def getSellPrices():
     return pricesSell
 
 def getRecipeSellPrices():
-    pricesSellRecipe=price.find_one({"sellRecipe": {"$exists":True}, {"_id":0}}
+    pricesSellRecipe=price.find_one({"sellRecipe": {"$exists":True}}, {"_id":0}}
     return pricesSellRecipe
 
 def getCraftPrices():
