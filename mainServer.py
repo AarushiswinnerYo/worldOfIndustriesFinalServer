@@ -41,6 +41,11 @@ def get_buy_prices():
     prices=getBuyPrices()
     return prices["buyprices"]
 
+@app.post("/craftPrices")
+def get_craft_prices():
+    pricesCraft=getCraftPrices()
+    return pricesCraft["craftingPrices"]
+
 @app.post("/buy")
 def buy_materials(token: str, amount: int, passwd: str, material_name:str, material_subtype=""):
     return buyFunc(token=token, amount=amount, passwd=passwd, materialName=material_name,materialSubType=material_subtype)
@@ -48,6 +53,11 @@ def buy_materials(token: str, amount: int, passwd: str, material_name:str, mater
 @app.post("/sell")
 def sell_materials(token: str, amount: int, passwd: str, material_name:str, material_subtype=""):
     return sellFunc(token=token, amount=amount, passwd=passwd, materialName=material_name,materialSubType=material_subtype)
+
+@app.post("/sellRecipePrices")
+def get_recipe_selling_prices():
+    pricesSellRecipe=getRecipeSellPrices()
+    return pricesSellRecipe["sellRecipe"]
 
 @app.post("/sellPrices")
 def get_sell_prices():

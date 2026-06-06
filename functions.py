@@ -108,6 +108,14 @@ def getSellPrices():
     pricesSell=price.find_one({"sellprices":{"$exists": True}}, {"_id":0})
     return pricesSell
 
+def getRecipeSellPrices():
+    pricesSellRecipe=price.find_one({"sellRecipe": {"$exists":True}, {"_id":0}}
+    return pricesSellRecipe
+
+def getCraftPrices():
+    craftingPrices=price.find_one({"craftingPrices": {"$exists":True}},{"_id":0})
+    return craftingPrices
+
 def showInv(token):
     f=tl.find_one({"token":token})
     user=f["_id"]
