@@ -114,6 +114,7 @@ def getRecipeSellPrices():
 
 def getCraftPrices():
     craftingPrices=price.find_one({"craftingPrices": {"$exists":True}},{"_id":0})
+    return craftingPrices
 
 def showInv(token):
     f=tl.find_one({"token":token})
