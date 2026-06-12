@@ -159,7 +159,7 @@ def like(songNum):
     query={"_id":songNum}
     updateOp={"$set":{"likeCount":cur+1}}
     songlikes.update_one(query, updateOp)
-    return {"success": true, "postId": "123","liked": true,"likeCount": cur}
+    return {"success": True, "postId": "123","liked": True,"likeCount": cur}
 
 def showInv(token):
     f=tl.find_one({"token":token})
