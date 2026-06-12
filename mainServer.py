@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from tokenGenerator import gen
 from functions import *
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
