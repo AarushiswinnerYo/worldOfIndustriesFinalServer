@@ -11,6 +11,14 @@ class Item(BaseModel):
     price: float
     is_offer: bool | None = None
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://your-frontend-domain.com"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],
+)
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
