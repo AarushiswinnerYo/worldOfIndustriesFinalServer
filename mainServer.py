@@ -100,7 +100,7 @@ def unlike_song_2():
 
 @app.post("/unlike3")
 def unlike_song_3():
-    return unlike(1)
+    return unlike(3)
 
 @app.post('/userInfo')
 def get_User_Info(token: str):
