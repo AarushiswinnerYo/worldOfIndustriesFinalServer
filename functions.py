@@ -6,10 +6,13 @@ import tokenGenerator as tg
 
 cluster=os.getenv("MDB_CLUST")
 client=MongoClient(cluster)
+songLikesDB=client.songLikes
+songlikes=songLikesDB.likes
 db=client.Users
 profs=db.names
 tl=db.loginTokens
 lists=db.listings
+rawMaterialToRecipe=db.rawMaterialsToRecipes
 price=db.prices
 resources=["wood", "steel", "plants", "metal", "plastic"]
 materials={"steel":["type1","type2","type3"], "plants":["cotton","wool","silk","bamboo","tomato","onion"],"metal":["iron", "tungsten","copper"], "wood":["wood"],"plastic":["plastic"]}
@@ -115,6 +118,48 @@ def getRecipeSellPrices():
 def getCraftPrices():
     craftingPrices=price.find_one({"craftingPrices": {"$exists":True}},{"_id":0})
     return craftingPrices
+
+def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
+    userNameData=tl.find_one({"token": token})
+    username=userNameData['_id']
+    recipe_price=price.find_one({"craftprices":{"$exists":True}}, {'_id':0})["craftprices"][materialName]
+    rawMats=rawMaterialToRecipe.find_one({"recipes":{"$exists":True}}, {"_id":0})
+    if materialSubType=="":
+        query={"_id":username}
+        userData=profs.find_one(query)
+        total=material_price*amount
+        if userData[username]==passwd:
+            if userData["money"]>=total:
+                
+                update_operation={"$set":{"money": userData["money"]-total, materialName:userData[materialName]+amount}}
+                profs.update_one(query, update_operation)
+                return {"result":"Success"}
+            else:
+                return {"result":"Not Sufficient Funds"}
+        else:
+            return {"result":"Incorrect Password"}
+    else:
+        query={"_id":username}
+        userData=profs.find_one(query)
+        total=material_price[materialSubType]*amount
+        if userData[username]==passwd:
+            if userData["money"]>=total:
+                userData[materialName][materialSubType]+=amount
+                update_operation={"$set":{"money": userData["money"]-total, materialName:userData[materialName]}}
+                profs.update_one(query, update_operation)
+                return {"result":"Success"}
+            else:
+                return {"result":"Not Sufficient Funds"}
+        else:
+            return {"result":"Incorrect Password"}
+
+def like(songNum):
+    currentLikes=songLikes.find_one({"_id":songNum})
+    cur=currentLikes["likes"]
+    query={"_id":songNum}
+    updateOp={"$set":{"likeCount":cur+1}}
+    songLikes.update_one(query, updateOp)
+    return {"success": true, "postId": "123","liked": true,"likeCount": cur}
 
 def showInv(token):
     f=tl.find_one({"token":token})

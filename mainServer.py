@@ -59,10 +59,26 @@ def get_recipe_selling_prices():
     pricesSellRecipe=getRecipeSellPrices()
     return pricesSellRecipe["sellRecipe"]["recipes"]
 
+@app.post("/craft")
+def craft_recipes(token: str, amount: int, passwd: str, recipe_name:str, recipe_subtype=""):
+    return craftRecipeFunc(token=token, amount=amount, passwd=passwd, materialName=recipe_name,materialSubType=recipe_subtype)
+
 @app.post("/sellPrices")
 def get_sell_prices():
     pricesSell=getSellPrices()
     return pricesSell["sellprices"]
+
+@app.post("/like1")
+def like_song_1():
+    return like(1)
+
+@app.post("/like2")
+def like_song_2():
+    return like(2)
+
+@app.post("/like3")
+def like_song_3():
+    return like(3)
 
 @app.post('/userInfo')
 def get_User_Info(token: str):
