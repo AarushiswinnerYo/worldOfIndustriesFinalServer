@@ -153,6 +153,11 @@ def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
         else:
             return {"result":"Incorrect Password"}
 
+def getLikes(songNum):
+    currentLikes=songlikes.find_one({"_id":songNum})
+    cur=currentLikes["likeCount"]
+    return {"currentLikeCount": cur, "userHasLiked": False}
+
 def like(songNum):
     currentLikes=songlikes.find_one({"_id":songNum})
     cur=currentLikes["likeCount"]

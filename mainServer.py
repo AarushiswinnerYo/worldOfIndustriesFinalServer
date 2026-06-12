@@ -77,6 +77,19 @@ def get_sell_prices():
     pricesSell=getSellPrices()
     return pricesSell["sellprices"]
 
+@app.get("/likes1")
+def get_likes_1():
+    return getLikes(1)
+
+@app.get("/likes2")
+def get_likes_2():
+    return getLikes(2)
+
+@app.get("/likes3")
+def get_likes_3():
+    return getLikes(3)
+
+
 @app.post("/like1")
 def like_song_1():
     print("Received raw payload: 1")
