@@ -154,7 +154,7 @@ def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
             return {"result":"Incorrect Password"}
 
 def like(songNum):
-    currentLikes=songLikes.find_one({"_id":songNum})
+    currentLikes=songlikes.find_one({"_id":songNum})
     cur=currentLikes["likes"]
     query={"_id":songNum}
     updateOp={"$set":{"likeCount":cur+1}}
