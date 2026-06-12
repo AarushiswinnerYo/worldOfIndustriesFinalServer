@@ -158,7 +158,7 @@ def like(songNum):
     cur=currentLikes["likes"]
     query={"_id":songNum}
     updateOp={"$set":{"likeCount":cur+1}}
-    songLikes.update_one(query, updateOp)
+    songlikes.update_one(query, updateOp)
     return {"success": true, "postId": "123","liked": true,"likeCount": cur}
 
 def showInv(token):
