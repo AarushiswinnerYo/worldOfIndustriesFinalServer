@@ -135,7 +135,9 @@ def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
                 for w in materials:
                     try:
                         j=w.keys()
+                        print(j)
                     except:
+                        print(w)
                         if userData[w]>=rawNeeds[w]*amount:
                                 rawAmt=rawNeeds[w]*amount
                                 userData["recipes"][materialName]+=amount
