@@ -113,7 +113,7 @@ def sellRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
         total=material_price*amount
         if userData[username]==passwd:
             if userData["recipes"][materialName]>=amount:
-                userData["recipes"][materialName]-amount
+                userData["recipes"][materialName]-=amount
                 update_operation={"$set":{"money": userData["money"]+total, "recipes":userData["recipes"]}}
                 profs.update_one(query, update_operation)
                 return {"result":"Success"}
@@ -126,7 +126,7 @@ def sellRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
         userData=profs.find_one(query)
         total=material_price[materialSubType]*amount
         if userData[username]==passwd:
-            if userData[materialName][materialSubType]>=amount:
+            if userData["recipes"][materialName][materialSubType]>=amount:
                 userData["recipes"][materialName][materialSubType]-=amount
                 update_operation={"$set":{"money": userData["money"]+total, "reipes":userData["recipes"]}}
                 profs.update_one(query, update_operation)
