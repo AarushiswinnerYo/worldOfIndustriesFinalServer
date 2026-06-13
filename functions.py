@@ -139,9 +139,9 @@ def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
                         if userData[w]>=rawNeeds[w]*amount:
                                 rawAmt=rawNeeds[w][t]*amount
                                 userData["recipes"][materialName]+=amount
-                            update_operation={"$set":{"money": userData["money"]-total, "recipes":userData["recipes"], w:userData[w]-rawAmt}}
-                            profs.update_one(query, update_operation)
-                            return {"result":"Success"}
+                                update_operation={"$set":{"money": userData["money"]-total, "recipes":userData["recipes"], w:userData[w]-rawAmt}}
+                                profs.update_one(query, update_operation)
+                                return {"result":"Success"}
                         else:
                             break
                             return{"result":"Not Sufficient Materials"}
