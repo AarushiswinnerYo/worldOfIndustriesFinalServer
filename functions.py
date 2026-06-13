@@ -106,7 +106,7 @@ def sellFunc(token, amount, passwd, materialName, materialSubType=""):
 def sellRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
     userNameData=tl.find_one({"token": token})
     username=userNameData['_id']
-    material_price=price.find_one({"sellprices":{"$exists":True}}, {'_id':0})["sellRecipe"]["recipes"][materialName]
+    material_price=price.find_one({"sellRecipe":{"$exists":True}}, {'_id':0})["sellRecipe"]["recipes"][materialName]
     if materialSubType=="":
         query={"_id":username}
         userData=profs.find_one(query)
