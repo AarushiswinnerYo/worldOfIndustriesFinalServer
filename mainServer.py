@@ -89,7 +89,6 @@ def get_likes_2():
 def get_likes_3():
     return getLikes(3)
 
-
 @app.post("/like1")
 def like_song_1():
     print("Received raw payload: 1")

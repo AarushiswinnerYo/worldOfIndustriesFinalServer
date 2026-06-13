@@ -124,16 +124,34 @@ def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
     username=userNameData['_id']
     recipe_price=price.find_one({"craftprices":{"$exists":True}}, {'_id':0})["craftprices"][materialName]
     rawMats=rawMaterialToRecipe.find_one({"recipes":{"$exists":True}}, {"_id":0})
+    rawNeeds=rawMats["recipes"][materialName]
+    materials=rawNeeds.keys()
     if materialSubType=="":
         query={"_id":username}
         userData=profs.find_one(query)
         total=material_price*amount
         if userData[username]==passwd:
             if userData["money"]>=total:
-                
-                update_operation={"$set":{"money": userData["money"]-total, materialName:userData[materialName]+amount}}
-                profs.update_one(query, update_operation)
-                return {"result":"Success"}
+                for w in materials:
+                    try:
+                        j=w.keys()
+                    except:
+                        if userData[w]>=rawNeeds[w]:
+                            update_operation={"$set":{"money": userData["money"]-total, "recipes"[materialName]:userData["recipes"][materialName]+amount, w:userData[w]-rawNeeds[w]}}
+                            profs.update_one(query, update_operation)
+                            return {"result":"Success"}
+                        else:
+                            break
+                            return{"result":"Not Sufficient Materials"}
+                    else:
+                        for t in j:
+                            if userData[w][t]>=rawNeeds[w][t]:
+                                update_operation={"$set":{"money": userData["money"]-total, "recipes"[materialName]:userData["recipes"][materialName]+amount, w[t]:userData[w][t]-rawNeeds[w][t]}}
+                                profs.update_one(query, update_operation)
+                                return {"result":"Success"}
+                            else:
+                                break
+                                return{"result":"Not Sufficient Materials"}
             else:
                 return {"result":"Not Sufficient Funds"}
         else:
