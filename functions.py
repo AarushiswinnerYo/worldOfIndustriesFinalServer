@@ -145,7 +145,6 @@ def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
                                 profs.update_one(query, update_operation)
                                 return {"result":"Success"}
                         else:
-                            break
                             return{"result":"Not Sufficient Materials"}
                     else:
                         for t in j:
@@ -157,7 +156,6 @@ def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
                                 profs.update_one(query, update_operation)
                                 return {"result":"Success"}
                             else:
-                                break
                                 return{"result":"Not Sufficient Materials"}
             else:
                 return {"result":"Not Sufficient Funds"}
@@ -186,7 +184,6 @@ def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
                                 profs.update_one(query, update_operation)
                                 return {"result":"Success"}
                         else:
-                            break
                             return{"result":"Not Sufficient Materials"}
                     else:
                         for t in j:
@@ -198,7 +195,6 @@ def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
                                 profs.update_one(query, update_operation)
                                 return {"result":"Success"}
                             else:
-                                break
                                 return{"result":"Not Sufficient Materials"}
             else:
                 return {"result":"Not Sufficient Funds"}
