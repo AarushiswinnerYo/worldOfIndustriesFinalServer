@@ -137,7 +137,7 @@ def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
                         j=w.keys()
                     except:
                         if userData[w]>=rawNeeds[w]*amount:
-                                rawAmt=rawNeeds[w][t]*amount
+                                rawAmt=rawNeeds[w]*amount
                                 userData["recipes"][materialName]+=amount
                                 update_operation={"$set":{"money": userData["money"]-total, "recipes":userData["recipes"], w:userData[w]-rawAmt}}
                                 profs.update_one(query, update_operation)
