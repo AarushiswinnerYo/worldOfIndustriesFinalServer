@@ -129,7 +129,7 @@ def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
     if materialSubType=="":
         query={"_id":username}
         userData=profs.find_one(query)
-        total=material_price*amount
+        total=recipe_price*amount
         if userData[username]==passwd:
             if userData["money"]>=total:
                 for w in materials:
