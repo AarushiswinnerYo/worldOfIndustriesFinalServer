@@ -122,7 +122,7 @@ def getCraftPrices():
 def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
     userNameData=tl.find_one({"token": token})
     username=userNameData['_id']
-    recipe_price=price.find_one({"craftPrices":{"$exists":True}}, {'_id':0})["craftPrices"][materialName]
+    recipe_price=price.find_one({"craftingPrices":{"$exists":True}}, {'_id':0})["craftingPrices"][materialName]
     rawMats=rawMaterialToRecipe.find_one({"recipes":{"$exists":True}}, {"_id":0})
     rawNeeds=rawMats["recipes"][materialName]
     materials=rawNeeds.keys()
