@@ -136,8 +136,10 @@ def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
                     try:
                         j=w.keys()
                     except:
-                        if userData[w]>=rawNeeds[w]:
-                            update_operation={"$set":{"money": userData["money"]-total, "recipes"[materialName]:userData["recipes"][materialName]+amount, w:userData[w]-rawNeeds[w]}}
+                        if userData[w]>=rawNeeds[w]*amount:
+                                rawAmt=rawNeeds[w][t]*amount
+                                userData["recipes"][materialName]+=amount
+                            update_operation={"$set":{"money": userData["money"]-total, "recipes":userData["recipes"], w:userData[w]-rawAmt}}
                             profs.update_one(query, update_operation)
                             return {"result":"Success"}
                         else:
@@ -145,8 +147,10 @@ def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
                             return{"result":"Not Sufficient Materials"}
                     else:
                         for t in j:
-                            if userData[w][t]>=rawNeeds[w][t]:
-                                update_operation={"$set":{"money": userData["money"]-total, "recipes"[materialName]:userData["recipes"][materialName]+amount, w[t]:userData[w][t]-rawNeeds[w][t]}}
+                            if userData[w][t]>=rawNeeds[w][t]*amount:
+                                rawAmt=rawNeeds[w][t]*amount
+                                userData["recipes"][materialName]+=amount
+                                update_operation={"$set":{"money": userData["money"]-total, "recipes":userData["recipes"], w[t]:userData[w][t]-rawAmt}}
                                 profs.update_one(query, update_operation)
                                 return {"result":"Success"}
                             else:
