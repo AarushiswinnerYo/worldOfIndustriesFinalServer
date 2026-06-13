@@ -63,6 +63,10 @@ def buy_materials(token: str, amount: int, passwd: str, material_name:str, mater
 def sell_materials(token: str, amount: int, passwd: str, material_name:str, material_subtype=""):
     return sellFunc(token=token, amount=amount, passwd=passwd, materialName=material_name,materialSubType=material_subtype)
 
+@app.post("/sellrec")
+def sell_recipe(token: str, amount: int, passwd: str, material_name:str, material_subtype=""):
+    return sellRecipeFunc(token=token, amount=amount, passwd=passwd, materialName=material_name,materialSubType=material_subtype)
+
 @app.post("/sellRecipePrices")
 def get_recipe_selling_prices():
     pricesSellRecipe=getRecipeSellPrices()
