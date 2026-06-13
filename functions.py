@@ -122,11 +122,11 @@ def getCraftPrices():
 def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
     userNameData=tl.find_one({"token": token})
     username=userNameData['_id']
-    recipe_price=price.find_one({"craftingPrices":{"$exists":True}}, {'_id':0})["craftingPrices"]["recipes"][materialName]
-    rawMats=rawMaterialToRecipe.find_one({"recipes":{"$exists":True}}, {"_id":0})
-    rawNeeds=rawMats["recipes"][materialName]
-    materials=rawNeeds.keys()
     if materialSubType=="":
+        recipe_price=price.find_one({"craftingPrices":{"$exists":True}}, {'_id':0})["craftingPrices"]["recipes"][materialName]
+        rawMats=rawMaterialToRecipe.find_one({"recipes":{"$exists":True}}, {"_id":0})
+        rawNeeds=rawMats["recipes"][materialName]
+        materials=rawNeeds.keys()
         query={"_id":username}
         userData=profs.find_one(query)
         total=recipe_price*amount
@@ -164,15 +164,42 @@ def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
         else:
             return {"result":"Incorrect Password"}
     else:
+        recipe_price=price.find_one({"craftingPrices":{"$exists":True}}, {'_id':0})["craftingPrices"]["recipes"][materialName][materialSubType]
+        rawMats=rawMaterialToRecipe.find_one({"recipes":{"$exists":True}}, {"_id":0})
+        rawNeeds=rawMats["recipes"][materialName][materialSubType]
+        materials=rawNeeds.keys()
         query={"_id":username}
         userData=profs.find_one(query)
-        total=material_price[materialSubType]*amount
+        total=recipe_price*amount
         if userData[username]==passwd:
             if userData["money"]>=total:
-                userData[materialName][materialSubType]+=amount
-                update_operation={"$set":{"money": userData["money"]-total, materialName:userData[materialName]}}
-                profs.update_one(query, update_operation)
-                return {"result":"Success"}
+                for w in materials:
+                    try:
+                        j=rawNeeds[w].keys()
+                        print(j)
+                    except:
+                        print(w)
+                        if userData[w]>=rawNeeds[w]*amount:
+                                rawAmt=rawNeeds[w]*amount
+                                userData["recipes"][materialName]+=amount
+                                update_operation={"$set":{"money": userData["money"]-total, "recipes":userData["recipes"], w:userData[w]-rawAmt}}
+                                profs.update_one(query, update_operation)
+                                return {"result":"Success"}
+                        else:
+                            break
+                            return{"result":"Not Sufficient Materials"}
+                    else:
+                        for t in j:
+                            if userData[w][t]>=rawNeeds[w][t]*amount:
+                                rawAmt=rawNeeds[w][t]*amount
+                                userData["recipes"][materialName][materialSubType]+=amount
+                                userData[w][t]-=rawAmt
+                                update_operation={"$set":{"money": userData["money"]-total, "recipes":userData["recipes"], w:userData[w]}}
+                                profs.update_one(query, update_operation)
+                                return {"result":"Success"}
+                            else:
+                                break
+                                return{"result":"Not Sufficient Materials"}
             else:
                 return {"result":"Not Sufficient Funds"}
         else:
