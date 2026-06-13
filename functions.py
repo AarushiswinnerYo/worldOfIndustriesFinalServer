@@ -134,7 +134,7 @@ def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
             if userData["money"]>=total:
                 for w in materials:
                     try:
-                        j=w.keys()
+                        j=rawNeeds[w].keys()
                         print(j)
                     except:
                         print(w)
