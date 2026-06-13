@@ -128,7 +128,7 @@ def sellRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
         if userData[username]==passwd:
             if userData["recipes"][materialName][materialSubType]>=amount:
                 userData["recipes"][materialName][materialSubType]-=amount
-                update_operation={"$set":{"money": userData["money"]+total, "reipes":userData["recipes"]}}
+                update_operation={"$set":{"money": userData["money"]+total, "recipes":userData["recipes"]}}
                 profs.update_one(query, update_operation)
                 return {"result":"Success"}
             else:
