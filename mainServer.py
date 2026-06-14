@@ -81,42 +81,18 @@ def get_sell_prices():
     pricesSell=getSellPrices()
     return pricesSell["sellprices"]
 
-@app.get("/likes1")
-def get_likes_1():
-    return getLikes(1)
+@app.get("/likes{song_id}")
+def get_likes(song_id: int):
+    return getLikes(song_id)
 
-@app.get("/likes2")
-def get_likes_2():
-    return getLikes(2)
+@app.post("/like{song_id}")
+def like_song(song_id: int):
+    print(f"Received raw payload: {song_id}")
+    return like(song_id)
 
-@app.get("/likes3")
-def get_likes_3():
-    return getLikes(3)
-
-@app.post("/like1")
-def like_song_1():
-    print("Received raw payload: 1")
-    return like(1)
-
-@app.post("/like2")
-def like_song_2():
-    return like(2)
-
-@app.post("/like3")
-def like_song_3():
-    return like(3)
-
-@app.post("/unlike1")
-def unlike_song_1():
-    return unlike(1)
-    
-@app.post("/unlike2")
-def unlike_song_2():
-    return unlike(2)
-
-@app.post("/unlike3")
-def unlike_song_3():
-    return unlike(3)
+@app.post("/unlike{song_id}")
+def unlike_song(song_id: int):
+    return unlike(song_id)
 
 @app.post('/userInfo')
 def get_User_Info(token: str):
