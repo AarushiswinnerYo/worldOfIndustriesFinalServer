@@ -192,6 +192,8 @@ def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
                                 profs.update_one(query, update_operation)
                                 if rawNeeds[w][t]==list(rawNeeds[w].keys())[-1] and w==list(rawNeeds.keys())[-1]:
                                     return {"result":"Success"}
+                                else:
+                                    continue
                             else:
                                 return{"result":"Not Sufficient Materials"}
             else:
