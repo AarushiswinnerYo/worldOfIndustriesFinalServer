@@ -190,7 +190,7 @@ def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
                                 userData[w][t]-=rawAmt
                                 update_operation={"$set":{"money": userData["money"]-total, "recipes":userData["recipes"], w:userData[w]}}
                                 profs.update_one(query, update_operation)
-                                if rawNeeds[w][t]==list(rawNeeds[w].keys())[-1] and w==list(rawNeeds.keys())[-1]:
+                                if t==list(rawNeeds[w].keys())[-1] and w==list(rawNeeds.keys())[-1]:
                                     return {"result":"Success"}
                                 else:
                                     continue
