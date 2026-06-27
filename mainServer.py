@@ -94,6 +94,11 @@ def like_song(song_id: int):
 def unlike_song(song_id: int):
     return unlike(song_id)
 
+@app.post("/userLikeID")
+def get_user_like_id():
+    like_id = getUserLikeID()
+    return {"userID": like_id}
+
 @app.post('/userInfo')
 def get_User_Info(token: str):
     info=showInv(token)

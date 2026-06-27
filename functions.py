@@ -1,6 +1,7 @@
 import os
 import ast
 import pickle
+import random
 from pymongo import MongoClient
 import tokenGenerator as tg
 
@@ -8,6 +9,7 @@ cluster=os.getenv("MDB_CLUST")
 client=MongoClient(cluster)
 songLikesDB=client.songLikes
 songlikes=songLikesDB.likes
+userIDs=songLikesDB.userIDs
 db=client.Users
 profs=db.names
 tl=db.loginTokens
@@ -38,6 +40,14 @@ def listListings(typeOfMaterial,material):
     finalList=allLists[material][typeOfMaterial]
     print(finalList)
     return finalList
+
+def getUserLikeID():
+    userLikeID = random.randint(100000, 999999)
+    if userLikeID in userIDs.distinct("_id"):
+        return getUserLikeID()
+    else:
+        userIDs.insert_one({"_id": userLikeID})
+        return userLikeID
 
 def buyFunc(token, amount, passwd, materialName, materialSubType=""):
     userNameData=tl.find_one({"token": token})
