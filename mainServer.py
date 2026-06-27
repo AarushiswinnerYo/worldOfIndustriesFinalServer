@@ -86,13 +86,13 @@ def get_likes(song_id: int, userLikeID: int):
     return getLikes(song_id, userLikeID)
 
 @app.post("/like{song_id}")
-def like_song(song_id: int):
+def like_song(song_id: int, userLikeID: int):
     print(f"Received raw payload: {song_id}")
-    return like(song_id)
+    return like(song_id, userLikeID)
 
 @app.post("/unlike{song_id}")
-def unlike_song(song_id: int):
-    return unlike(song_id)
+def unlike_song(song_id: int, userLikeID: int):
+    return unlike(song_id, userLikeID)
 
 @app.post("/userLikeID")
 def get_user_like_id():
