@@ -42,7 +42,7 @@ def listListings(typeOfMaterial,material):
     return finalList
 
 def getUserLikeID():
-    userLikeID = random.randint(100000, 999999)
+    userLikeID = random.randint(1000000, 9999999)
     if userLikeID in userIDs.distinct("_id"):
         return getUserLikeID()
     else:
