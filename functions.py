@@ -258,6 +258,8 @@ def getLikes(songNum, userLikeID):
     currentLikes=songlikes.find_one({"_id":songNum})
     cur=currentLikes["likeCount"]
     userLikeData = userIDs.find_one({"_id": userLikeID})
+    if userLikeData is None:
+        hasLiked = "Not Found"
     if userLikeData[f"{songNum}"]:
         hasLiked = True
     else:
