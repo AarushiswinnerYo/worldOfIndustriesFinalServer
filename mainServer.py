@@ -82,8 +82,8 @@ def get_sell_prices():
     return pricesSell["sellprices"]
 
 @app.get("/likes{song_id}")
-def get_likes(song_id: int):
-    return getLikes(song_id)
+def get_likes(song_id: int, userLikeID: int):
+    return getLikes(song_id, userLikeID)
 
 @app.post("/like{song_id}")
 def like_song(song_id: int):
