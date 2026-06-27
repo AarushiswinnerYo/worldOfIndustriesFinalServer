@@ -46,7 +46,7 @@ def getUserLikeID():
     if userLikeID in userIDs.distinct("_id"):
         return getUserLikeID()
     else:
-        userIDs.insert_one({"_id": userLikeID})
+        userIDs.insert_one({"_id": userLikeID, "1":False, "2":False, "3":False, "4":False, "5":False, "6":False, "7":False})
         return userLikeID
 
 def buyFunc(token, amount, passwd, materialName, materialSubType=""):
