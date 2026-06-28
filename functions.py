@@ -41,14 +41,6 @@ def listListings(typeOfMaterial,material):
     print(finalList)
     return finalList
 
-def getUserLikeID():
-    userLikeID = random.randint(1000000, 9999999)
-    if userLikeID in userIDs.distinct("_id"):
-        return getUserLikeID()
-    else:
-        userIDs.insert_one({"_id": userLikeID, "1":False, "2":False, "3":False, "4":False, "5":False, "6":False, "7":False})
-        return userLikeID
-
 def buyFunc(token, amount, passwd, materialName, materialSubType=""):
     userNameData=tl.find_one({"token": token})
     username=userNameData['_id']
@@ -253,38 +245,6 @@ def craftRecipeFunc(token, amount, passwd, materialName, materialSubType=""):
                 return {"result":"Not Sufficient Funds"}
         else:
             return {"result":"Incorrect Password"}
-
-def getLikes(songNum, userLikeID):
-    currentLikes=songlikes.find_one({"_id":songNum})
-    cur=currentLikes["likeCount"]
-    userLikeData = userIDs.find_one({"_id": userLikeID})
-    if userLikeData:
-        if userLikeData[f"{songNum}"]:
-            hasLiked = True
-        else:
-            hasLiked = False
-    else:
-        hasLiked = "Not Found"
-    return {"currentLikeCount": cur, "userHasLiked": hasLiked}
-
-def like(songNum, userLikeID):
-    currentLikes=songlikes.find_one({"_id":songNum})
-    cur=currentLikes["likeCount"]
-    query={"_id":songNum}
-    updateOp={"$set":{"likeCount":cur+1}}
-    songlikes.update_one(query, updateOp)
-    query2 = {"_id": userLikeID}
-    userIDs.update_one(query2, {"$set": {f"{songNum}": True}})
-    return {"success": True, "postId": songNum,"liked": True,"likeCount": cur+1}
-def unlike(songNum, userLikeID):
-    currentLikes=songlikes.find_one({"_id":songNum})
-    cur=currentLikes["likeCount"]
-    query={"_id":songNum}
-    updateOp={"$set":{"likeCount":cur-1}}
-    songlikes.update_one(query, updateOp)
-    query2 = {"_id": userLikeID}
-    userIDs.update_one(query2, {"$set": {f"{songNum}": False}})
-    return {"success": True, "postId": songNum,"liked": False,"likeCount": cur-1}
 
 def showInv(token):
     f=tl.find_one({"token":token})
